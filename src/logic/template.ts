@@ -11,6 +11,7 @@ export class TemplateVariable {
   name: string;
   prompt: string;
   inputVariable: boolean;
+  expression?: string;
 
   constructor(config: any) {
     if (!config.name) {
@@ -19,9 +20,10 @@ export class TemplateVariable {
     if (config.input !== undefined) {
       this.inputVariable = config.input;
       if (!this.inputVariable) {
-        if (!config.calculate) {
+        if (!config.expression) {
           throw new NotInputVariableMustHaveCalculationPropertyError();
         }
+        this.expression = config.expression;
       }
     } else {
       this.inputVariable = true;

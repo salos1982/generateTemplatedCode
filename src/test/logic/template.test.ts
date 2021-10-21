@@ -1,5 +1,5 @@
 import { WrongVariableNameError } from "../../logic/errors";
-import { TemplateVariable } from "../../logic/template";
+import { TemplateVariable } from "../../logic/TemplateVariable";
 
 describe('test TemplateVariables', () => {
   it('test variable name success', () => {

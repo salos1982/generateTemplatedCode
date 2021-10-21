@@ -1,7 +1,7 @@
 import { tmpdir } from 'os';
 
 import { getPredefinedFunctions } from '../../logic/expressionFunctions';
-import { TemplateVariable } from '../../logic/template';
+import { TemplateVariable } from "../../logic/TemplateVariable";
 import { variableDependsOn, sortCalculatedVariablesDependencies } from '../../logic/utils';
 import { CycleDependencyError } from './../../logic/errors';
 import { join } from 'path';

@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 			try {
 				const templateManager = new TemplatesManager(workspacePath, new VSCodeUIProvider());
 				const contextPath = uri ? uri!.fsPath : null;
-				await templateManager.applyTemplate(contextPath);
+				await templateManager.applyTemplate(templateManager.template, contextPath);
 				vscode.window.showInformationMessage('Template applied');
 			} catch (err: any) {
 				vscode.window.showErrorMessage(err.message);

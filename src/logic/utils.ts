@@ -1,4 +1,4 @@
-import { TemplateVariable } from "./template";
+import { TemplateVariable } from "./TemplateVariable";
 import { CycleDependencyError } from './errors';
 import { TemplateParameter } from "./generator";
 

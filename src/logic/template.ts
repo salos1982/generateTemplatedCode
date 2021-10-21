@@ -2,46 +2,13 @@ import { existsSync, statSync } from "fs";
 import { join } from "path";
 import {
   NoPathError,
-  NotInputVariableMustHaveCalculationPropertyError,
-  NoVariableNameError,
   WrongPathError,
-  WrongVariableNameError,
 } from "./errors";
+import { TemplateVariable } from "./TemplateVariable";
 
 export enum TemplateType {
   workspace = 'workspace',
   local = 'local',
-}
-
-const identifierRegEx = /^[_a-zA-Z][_a-zA-Z0-9]{0,30}$/;
-
-export class TemplateVariable {
-  name: string;
-  prompt: string;
-  inputVariable: boolean;
-  expression?: string;
-
-  constructor(config: any) {
-    if (!config.name) {
-      throw new NoVariableNameError();
-    }
-    if (!identifierRegEx.test(config.name)) {
-      throw new WrongVariableNameError(config.name);
-    }
-    if (config.input !== undefined) {
-      this.inputVariable = config.input;
-      if (!this.inputVariable) {
-        if (!config.expression) {
-          throw new NotInputVariableMustHaveCalculationPropertyError();
-        }
-        this.expression = config.expression;
-      }
-    } else {
-      this.inputVariable = true;
-    }
-    this.name = config.name;
-    this.prompt = config.prompt;
-  }
 }
 
 export class Template {

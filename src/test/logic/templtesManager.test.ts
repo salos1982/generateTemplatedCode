@@ -3,7 +3,7 @@ import 'jest-extended';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
-import { TemplateVariable } from '../../logic/template';
+import { TemplateVariable } from "../../logic/TemplateVariable";
 import { TemplatesManager } from './../../logic/templatesManager';
 
 describe('test calculating variables', () => {

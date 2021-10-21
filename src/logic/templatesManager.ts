@@ -1,13 +1,13 @@
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { Template, TemplateType, TemplateVariable } from "./template";
+import { Template, TemplateType } from "./template";
+import { TemplateVariable } from "./TemplateVariable";
 import { IUIProvider } from './IUIProvider';
 import { generateModule, TemplateParameter } from "./generator";
 import { NoConfigFileError, NoContextDirectoryError } from "./errors";
 import { configFileName } from "./constants";
 import { calculateExpression, sortCalculatedVariablesDependencies } from "./utils";
 import { getPredefinedFunctions } from './expressionFunctions';
-
 
 export class TemplatesManager {
   template: Template;
@@ -27,11 +27,11 @@ export class TemplatesManager {
     this.uiProvider = uiProvider;
   }
 
-  async applyTemplate(contextDirectory: string | null) {
+  async applyTemplate(template: Template, contextDirectory: string | null) {
     let templateValues:Array<TemplateParameter> = this.getPredefinedValues(contextDirectory);
     const calculatedVariables: Array<TemplateVariable> = [];
-    for (let i = 0; i < this.template.variables.length; i++) {
-      const variable = this.template.variables[i];
+    for (let i = 0; i < template.variables.length; i++) {
+      const variable = template.variables[i];
       if (variable.inputVariable) {
         const title = `Input ${variable.name}`;
         const variableValue = await this.uiProvider.getUserText(title, variable.prompt);
@@ -49,14 +49,14 @@ export class TemplatesManager {
       templateValues = this.calculateExpressions(calculatedVariables, templateValues);
     }
 
-    if (this.template.type === TemplateType.local) {
+    if (template.type === TemplateType.local) {
       if (contextDirectory) {
-        generateModule(this.template.templatePath, contextDirectory, templateValues);
+        generateModule(template.templatePath, contextDirectory, templateValues);
       } else {
         throw new NoContextDirectoryError();
       }
-    } else if (this.template.type === TemplateType.workspace) {
-      generateModule(this.template.templatePath, this.workspaceDirectory, templateValues);
+    } else if (template.type === TemplateType.workspace) {
+      generateModule(template.templatePath, this.workspaceDirectory, templateValues);
     }
   }
 

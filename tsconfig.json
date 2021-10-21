@@ -5,6 +5,7 @@
 		"lib": [
 			"ES2021"
 		],
+		"types": ["jest", "jest-extended"], // <==== what was missing
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true   /* enable all strict type-checking options */

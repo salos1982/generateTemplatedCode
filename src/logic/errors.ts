@@ -42,3 +42,9 @@ export class CycleDependencyError extends Error {
     super(`Variables ${variables} have cycle dependency`);
   }
 }
+
+export class WrongRelativePathError extends Error {
+  constructor(path: string, basePath: string) {
+    super(`Path ${path} is not relative to ${basePath}`);
+  }
+}

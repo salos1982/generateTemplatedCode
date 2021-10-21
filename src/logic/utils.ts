@@ -1,5 +1,6 @@
 import { TemplateVariable } from "./template";
 import { CycleDependencyError } from './errors';
+import { TemplateParameter } from "./generator";
 
 interface GraphNode {
   variable: TemplateVariable;
@@ -62,4 +63,21 @@ export function variableDependsOn(var1: TemplateVariable, var2: TemplateVariable
   const regEx = new RegExp(`\\b${var2.name}\\b`);
   const matchResult = regEx.exec(var1.expression!);
   return matchResult !== null;
+}
+
+export function calculateExpression(
+  functionsMap: Map<string, Function>,
+  currentValues: Array<TemplateParameter>,
+  expression: string
+): any {
+  const functionParameters = currentValues.map(item => item.name);
+  const functionParamatersValues:Array<any> = currentValues.map(item => item.value);
+  functionsMap.forEach((value: Function, key: string) => {
+    functionParameters.push(key);
+    functionParamatersValues.push(value);
+  });
+
+  const func = new Function(...functionParameters, `return ${expression}`);
+  const value = func(...functionParamatersValues);
+  return value;
 }

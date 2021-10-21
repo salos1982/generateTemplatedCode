@@ -5,9 +5,9 @@ import { IUIProvider } from './IUIProvider';
 import { generateModule, TemplateParameter } from "./generator";
 import { NoConfigFileError, NoContextDirectoryError } from "./errors";
 import { configFileName } from "./constants";
-import { sortCalculatedVariablesDependencies } from "./utils";
+import { calculateExpression, sortCalculatedVariablesDependencies } from "./utils";
+import { getPredefinedFunctions } from './expressionFunctions';
 
-const camelCase = require('camelcase');
 
 export class TemplatesManager {
   template: Template;
@@ -28,7 +28,7 @@ export class TemplatesManager {
   }
 
   async applyTemplate(contextDirectory: string | null) {
-    let templateValues:Array<TemplateParameter> = [];
+    let templateValues:Array<TemplateParameter> = this.getPredefinedValues(contextDirectory);
     const calculatedVariables: Array<TemplateVariable> = [];
     for (let i = 0; i < this.template.variables.length; i++) {
       const variable = this.template.variables[i];
@@ -60,27 +60,28 @@ export class TemplatesManager {
     }
   }
 
-  private calculateExpressions(
+  getPredefinedValues(contextDirectory: string | null): Array<TemplateParameter> {
+    const result = new Array<TemplateParameter>();
+    result.push({ name: 'workspace_directory', value: this.workspaceDirectory });
+    if (contextDirectory !== null) {
+      result.push({ name: 'context_directory', value: contextDirectory });
+    }
+
+    return result;
+  }
+
+  calculateExpressions(
     variables:Array<TemplateVariable>,
     currentValues: Array<TemplateParameter>
   ): Array<TemplateParameter> {
     const resultValues = [...currentValues];
     const sortedVariables = sortCalculatedVariablesDependencies(variables);
+    const predefinedFunctions = getPredefinedFunctions(this.workspaceDirectory);
     sortedVariables.forEach(variable => {
-      const functionParameters = resultValues.map(item => item.name);
-      const functionParamatersValues = resultValues.map(item => item.value);
-      this.appendPredefinedFunctions(functionParameters, functionParamatersValues);
-  
-      const func = new Function(...functionParameters, `return ${variable.expression}`);
-      const variableValue = func(...functionParamatersValues);
+      const variableValue = calculateExpression(predefinedFunctions, resultValues, variable.expression!);
       resultValues.push({ name: variable.name, value: variableValue });
     });
 
     return resultValues;
-  }
-
-  private appendPredefinedFunctions(names: Array<string>, values:Array<any>) {
-    names.push('camelCase');
-    values.push(camelCase);
   }
 }

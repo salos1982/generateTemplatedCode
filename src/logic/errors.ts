@@ -38,7 +38,7 @@ If variable is set as not input it must contain field calculate with function th
 }
 
 export class CycleDependencyError extends Error {
-  constructor(variableName1: string, variableName2: string) {
-    super(`Variables ${variableName1} and ${variableName2} have cycle dependecy`);
+  constructor(variables: Array<string>) {
+    super(`Variables ${variables} have cycle dependency`);
   }
 }

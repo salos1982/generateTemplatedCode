@@ -3,8 +3,9 @@ import { join } from "path";
 import { Template, TemplateType, TemplateVariable } from "./template";
 import { IUIProvider } from './IUIProvider';
 import { generateModule, TemplateParameter } from "./generator";
-import { CycleDependencyError, NoConfigFileError, NoContextDirectoryError } from "./errors";
+import { NoConfigFileError, NoContextDirectoryError } from "./errors";
 import { configFileName } from "./constants";
+import { sortCalculatedVariablesDependencies } from "./utils";
 
 const camelCase = require('camelcase');
 
@@ -64,12 +65,11 @@ export class TemplatesManager {
     currentValues: Array<TemplateParameter>
   ): Array<TemplateParameter> {
     const resultValues = [...currentValues];
-    const sortedVariables = this.sortCalculatedVariablesDependencies(variables);
+    const sortedVariables = sortCalculatedVariablesDependencies(variables);
     sortedVariables.forEach(variable => {
       const functionParameters = resultValues.map(item => item.name);
       const functionParamatersValues = resultValues.map(item => item.value);
-      functionParameters.push('camelCase');
-      functionParamatersValues.push(camelCase);
+      this.appendPredefinedFunctions(functionParameters, functionParamatersValues);
   
       const func = new Function(...functionParameters, `return ${variable.expression}`);
       const variableValue = func(...functionParamatersValues);
@@ -79,29 +79,8 @@ export class TemplatesManager {
     return resultValues;
   }
 
-  private sortCalculatedVariablesDependencies(variables:Array<TemplateVariable>): Array<TemplateVariable> {
-    const result = [...variables];
-    variables.sort((var1: TemplateVariable, var2: TemplateVariable): number => {
-      const var1DependsOnVar2 = this.variableDependsOn(var1, var2);
-      const var2DependsOnVar1 = this.variableDependsOn(var2, var1);
-      if (!var1DependsOnVar2 && !var2DependsOnVar1) {
-        return 0;
-      }
-      if (var1DependsOnVar2 && var2DependsOnVar1) {
-        throw new CycleDependencyError(var1.name, var2.name);
-      }
-
-      if (var1DependsOnVar2 && !var2DependsOnVar1) {
-        return 1;
-      }
-
-      return -1;
-    });
-
-    return result;
-  }
-
-  private variableDependsOn(var1: TemplateVariable, var2: TemplateVariable): boolean {
-    return var1.expression!.indexOf(var2.name) !== -1;
+  private appendPredefinedFunctions(names: Array<string>, values:Array<any>) {
+    names.push('camelCase');
+    values.push(camelCase);
   }
 }

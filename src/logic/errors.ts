@@ -18,6 +18,12 @@ export class NoVariableNameError extends Error {
   }
 }
 
+export class WrongVariableNameError extends Error {
+  constructor(name:string) {
+    super(`Variable name "${name}" must be identifier (no spaces etc)`);
+  }
+}
+
 export class NoConfigFileError extends Error {
   constructor(workspaceDirectory: string) {
     super(`Config found "${configFileName}}" is not found in workspace directory ${workspaceDirectory}`);

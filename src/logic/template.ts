@@ -1,11 +1,19 @@
 import { existsSync, statSync } from "fs";
 import { join } from "path";
-import { NoPathError, NotInputVariableMustHaveCalculationPropertyError, NoVariableNameError, WrongPathError } from "./errors";
+import {
+  NoPathError,
+  NotInputVariableMustHaveCalculationPropertyError,
+  NoVariableNameError,
+  WrongPathError,
+  WrongVariableNameError,
+} from "./errors";
 
 export enum TemplateType {
   workspace = 'workspace',
   local = 'local',
 }
+
+const identifierRegEx = /^[_a-zA-Z][_a-zA-Z0-9]{0,30}$/;
 
 export class TemplateVariable {
   name: string;
@@ -16,6 +24,9 @@ export class TemplateVariable {
   constructor(config: any) {
     if (!config.name) {
       throw new NoVariableNameError();
+    }
+    if (!identifierRegEx.test(config.name)) {
+      throw new WrongVariableNameError(config.name);
     }
     if (config.input !== undefined) {
       this.inputVariable = config.input;

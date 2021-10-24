@@ -54,3 +54,33 @@ export class WrongRelativePathError extends Error {
     super(`Path ${path} is not relative to ${basePath}`);
   }
 }
+
+export class WrongFileNameForSnippet extends Error {
+  constructor() {
+    super('Property fileName is not set for addSnippet action');
+  }
+}
+
+export class WrongSnippet extends Error {
+  constructor() {
+    super('Property snippet is not set for addSnippet action');
+  }
+}
+
+export class WrongFileNameError extends Error {
+  constructor(path: string) {
+    super(`Wrong path ${path}`);
+  }
+}
+
+export class NoSnippetError extends Error {
+  constructor(snippet: string, file: string) {
+    super(`There is no snippet ${snippet} in ${file}`);
+  }
+}
+
+export class WrongPositionValue extends Error {
+  constructor() {
+    super('Position can be only "after" or "before" values');
+  }
+}

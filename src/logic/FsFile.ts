@@ -39,7 +39,7 @@ export class FsFile implements IFile {
     this.appendWithNewLine(indentedData);
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (this.content) {
       writeFileSync(this.fileName, this.content!);
     }

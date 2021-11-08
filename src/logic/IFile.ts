@@ -7,5 +7,5 @@ export interface IFile {
   getStartOfLinePositionWithText(text: string): number;
   getNextLinePosition(textPosition: number): number;
   getLineIndent(textPosition: number): string;
-  save(): void;
+  save(): Promise<void>;
 }

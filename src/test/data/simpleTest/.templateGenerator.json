@@ -1,0 +1,20 @@
+{
+  "type": "workspace",
+  "path": "template",
+  "variables": [
+    {
+      "name": "nameOfModule",
+      "prompt": "Input name of module"
+    },
+    {
+      "name": "nameOfModuleCamel",
+      "input": false,
+      "expression": "camelCase(nameOfModule)"
+    },
+    {
+      "name": "curDate",
+      "input": false,
+      "expression": "new Date('2021-01-01').toLocaleDateString('en-US')"
+    }
+  ]
+}

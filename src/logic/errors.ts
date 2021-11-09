@@ -84,3 +84,9 @@ export class WrongPositionValue extends Error {
     super('Position can be only "after" or "before" values');
   }
 }
+
+export class NoActionTypeError extends Error {
+  constructor() {
+    super('Action must have "type" field');
+  }
+}

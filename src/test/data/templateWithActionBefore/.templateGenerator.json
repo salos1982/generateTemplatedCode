@@ -1,0 +1,19 @@
+{
+  "type": "workspace",
+  "path": "template",
+  "variables": [
+    {
+      "name": "nameOfModule",
+      "prompt": "Input name of module"
+    }
+  ],
+  "actions": [
+    {
+      "type": "insertTemplateToFile",
+      "fileName": "{{workspace_directory}}/modules/modules.list",
+      "snippet": "// end list",
+      "template": "{{nameOfModule}}.init();",
+      "position": "before"
+    }
+  ]
+}

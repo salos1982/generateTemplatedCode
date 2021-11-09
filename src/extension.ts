@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { getWorkspaceDirectory } from './vscodeWrappers/vsCodeTools';
 import { TemplatesManager } from './logic/templatesManager';
 import { VSCodeUIProvider } from './vscodeWrappers/VSCodeUIProvider';
+import { FileManager } from './logic/fileManager';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -22,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const workspacePath = getWorkspaceDirectory();
 		if(workspacePath) {
 			try {
-				const templateManager = new TemplatesManager(workspacePath, new VSCodeUIProvider());
+				const templateManager = new TemplatesManager(workspacePath, new VSCodeUIProvider(), new FileManager('\n'));
 				const contextPath = uri ? uri!.fsPath : null;
 				await templateManager.applyTemplate(templateManager.template, contextPath);
 				vscode.window.showInformationMessage('Template applied');

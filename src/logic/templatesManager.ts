@@ -8,13 +8,15 @@ import { NoConfigFileError, NoContextDirectoryError } from "./errors";
 import { configFileName } from "./constants";
 import { calculateExpression, sortCalculatedVariablesDependencies } from "./utils";
 import { getPredefinedFunctions } from './expressionFunctions';
+import { IFileManager } from './IFileNamager';
 
 export class TemplatesManager {
   template: Template;
   workspaceDirectory: string;
   uiProvider: IUIProvider;
+  fileManager: IFileManager;
 
-  constructor(workspaceDirectory:string, uiProvider: IUIProvider) {
+  constructor(workspaceDirectory:string, uiProvider: IUIProvider, fileManager: IFileManager) {
     const configFilename = join(workspaceDirectory, configFileName);
     if (!existsSync(configFilename)) {
       throw new NoConfigFileError(workspaceDirectory);
@@ -25,6 +27,7 @@ export class TemplatesManager {
     this.template = new Template(config, workspaceDirectory);
     this.workspaceDirectory = workspaceDirectory;
     this.uiProvider = uiProvider;
+    this.fileManager = fileManager;
   }
 
   async applyTemplate(template: Template, contextDirectory: string | null) {
@@ -58,6 +61,10 @@ export class TemplatesManager {
     } else if (template.type === TemplateType.workspace) {
       generateModule(template.templatePath, this.workspaceDirectory, templateValues);
     }
+
+    template.actions.forEach(action => {
+      action.execute(templateValues, this.fileManager);
+    });
   }
 
   getPredefinedValues(contextDirectory: string | null): Array<TemplateParameter> {

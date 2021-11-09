@@ -1,8 +1,8 @@
 {
   "name": "addmodule",
-  "displayName": "addModule",
+  "displayName": "Add Module",
   "description": "Helps adding bunch of files for new module from template",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.61.0"
   },

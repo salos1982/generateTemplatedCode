@@ -4,7 +4,9 @@ import {
   NoPathError,
   WrongPathError,
 } from "./errors";
+import { IPostGenerateAction } from "./IPostGenerateAction";
 import { TemplateVariable } from "./TemplateVariable";
+import { PostGenerateActionFactory } from './PostGenerateActionFactory';
 
 export enum TemplateType {
   workspace = 'workspace',
@@ -15,6 +17,7 @@ export class Template {
   type: TemplateType;
   templatePath: string;
   variables: Array<TemplateVariable> = [];
+  actions: Array<IPostGenerateAction> = [];
 
   constructor(config: any, workspaceDirectory: string) {
     this.type = config.type ?? TemplateType.workspace;
@@ -33,6 +36,13 @@ export class Template {
     
     (config.variables ?? []).forEach((element: any) => {
       this.variables.push(new TemplateVariable(element));
-    });;
+    });
+
+    (config.actions ?? []).forEach((element: any) => {
+      const action = PostGenerateActionFactory.generateFromConfig(element);
+      if (action) {
+        this.actions.push(action);
+      }
+    });
   }
 }

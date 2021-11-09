@@ -81,3 +81,12 @@ export function calculateExpression(
   const value = func(...functionParamatersValues);
   return value;
 }
+
+export function appendIndent(content: string, indent: string, endOfLine: string): string {
+  const lines = content.split(endOfLine);
+    for (let i = 0; i < lines.length; i++ ) {
+      lines[i] = `${indent}${lines[i]}`;
+    }
+
+    return lines.join(endOfLine);
+}

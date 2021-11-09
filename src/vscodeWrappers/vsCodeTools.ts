@@ -8,3 +8,7 @@ export function getWorkspaceDirectory(): string | null
 
   return null;
 }
+
+export function getEndOfLineValue() : string {
+  return '\n';
+}

@@ -1,5 +1,6 @@
 import { IFile } from './IFile';
 import { readFileSync, writeFileSync } from 'fs';
+import { appendIndent } from './utils';
 
 export class FsFile implements IFile {
   fileName: string;
@@ -77,12 +78,7 @@ export class FsFile implements IFile {
   }
   
   private appendIndent(content: string, indent: string): string {
-    const lines = content.split(this.endOfLineString);
-    for (let i = 0; i < lines.length; i++ ) {
-      lines[i] = `${indent}${lines[i]}`;
-    }
-
-    return lines.join(this.endOfLineString);
+    return appendIndent(content, indent, this.endOfLineString);
   }
 
   private getStartLinePositionFromTextPosition(textPosition: number): number {

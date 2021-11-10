@@ -30,7 +30,7 @@ describe('test generating templates', () => {
     };
 
     const templatesManager = new TemplatesManager(workspacePath, uiProvider, new FileManager('\n'));
-    await templatesManager.applyTemplate(templatesManager.template, null);
+    await templatesManager.applyTemplate(templatesManager.templates[0], null);
     const generatedFilePath = join(workspacePath, `${nameOfModule}.js`);
     expect(existsSync(generatedFilePath)).toBeTrue();
     const generatedFile = readFileSync(generatedFilePath, { encoding: 'utf-8'});
@@ -50,7 +50,7 @@ describe('test generating templates', () => {
     mkdirSync(contextDir);
 
     const templatesManager = new TemplatesManager(workspacePath, uiProvider, new FileManager('\n'));
-    await templatesManager.applyTemplate(templatesManager.template, contextDir);
+    await templatesManager.applyTemplate(templatesManager.templates[0], contextDir);
     const generatedFilePath = join(contextDir, `${nameOfModule}.js`);
     expect(existsSync(generatedFilePath)).toBeTrue();
     const generatedFile = readFileSync(generatedFilePath, { encoding: 'utf-8'});
@@ -67,7 +67,7 @@ describe('test generating templates', () => {
     };
 
     const templatesManager = new TemplatesManager(workspacePath, uiProvider, new FileManager('\n'));
-    await templatesManager.applyTemplate(templatesManager.template, null);
+    await templatesManager.applyTemplate(templatesManager.templates[0], null);
     const generatedFilePath = join(workspacePath, `${nameOfModule}.js`);
     expect(existsSync(generatedFilePath)).toBeTrue();
     const generatedFile = readFileSync(generatedFilePath, { encoding: 'utf-8'});
@@ -86,7 +86,7 @@ describe('test generating templates', () => {
     };
 
     const templatesManager = new TemplatesManager(workspacePath, uiProvider, new FileManager('\n'));
-    await templatesManager.applyTemplate(templatesManager.template, null);
+    await templatesManager.applyTemplate(templatesManager.templates[0], null);
     const generatedFilePath = join(workspacePath, `${nameOfModule}.js`);
     expect(existsSync(generatedFilePath)).toBeTrue();
     const generatedFile = readFileSync(generatedFilePath, { encoding: 'utf-8'});

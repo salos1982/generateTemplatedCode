@@ -11,7 +11,7 @@ import { getPredefinedFunctions } from './expressionFunctions';
 import { IFileManager } from './IFileNamager';
 
 export class TemplatesManager {
-  template: Template;
+  templates: Array<Template> = [];
   workspaceDirectory: string;
   uiProvider: IUIProvider;
   fileManager: IFileManager;
@@ -24,7 +24,11 @@ export class TemplatesManager {
 
     const configData = readFileSync(configFilename, { encoding: 'utf-8'});
     const config = JSON.parse(configData);
-    this.template = new Template(config, workspaceDirectory);
+    if (config instanceof Array) {
+      this.templates = config.map(item => new Template(item, workspaceDirectory));
+    } else {
+      this.templates.push(new Template(config, workspaceDirectory));
+    }
     this.workspaceDirectory = workspaceDirectory;
     this.uiProvider = uiProvider;
     this.fileManager = fileManager;

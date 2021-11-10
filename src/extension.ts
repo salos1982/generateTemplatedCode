@@ -29,8 +29,25 @@ export function activate(context: vscode.ExtensionContext) {
 					new VSFileManager(getEndOfLineValue()),
 				);
 				const contextPath = uri ? uri!.fsPath : null;
-				if (await templateManager.applyTemplate(templateManager.template, contextPath)) {
-					vscode.window.showInformationMessage('Template applied');
+
+				if (templateManager.templates.length === 1) {
+					if (await templateManager.applyTemplate(templateManager.templates[0], contextPath)) {
+						showSuccessNotification();
+					}
+				} else if (templateManager.templates.length > 1) {
+					const selectedValue = await vscode.window.showQuickPick(
+						templateManager.templates.map(item => item.name),
+						{ canPickMany: false }
+					);
+
+					if (selectedValue) {
+						const template = templateManager.templates.find(item => item.name === selectedValue);
+						if (template) {
+							if (await templateManager.applyTemplate(template, contextPath)) {
+								showSuccessNotification();
+							}
+						}
+					}
 				}
 			} catch (err: any) {
 				vscode.window.showErrorMessage(err.message);
@@ -48,3 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
+
+function showSuccessNotification() {
+	vscode.window.showInformationMessage('Template applied');
+}

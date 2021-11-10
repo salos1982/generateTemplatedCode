@@ -12,6 +12,24 @@ export class NoPathError extends Error {
   }
 }
 
+export class NoNameError extends Error {
+  constructor() {
+    super('No name for template');
+  }
+}
+
+export class NoTypeError extends Error {
+  constructor() {
+    super('No type for template');
+  }
+}
+
+export class WrongTypeError extends Error {
+  constructor(value: any) {
+    super(`Type for template must be either 'worspace' or 'local' found ${value}`);
+  }
+}
+
 export class NoVariableNameError extends Error {
   constructor() {
     super('Variable must have name');

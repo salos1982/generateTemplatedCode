@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/salos1982/generateTemplatedCode/blob/main/generatorConfigSchema.json",
+  "title": "Config of templated generation",
+  "description": "Config for generating template code",
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["workspace", "local"],
+      "description": "Should workspace folder either selected folder to be used for generating code as source directory"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to template folder either global or local to workspace"
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of variable for templating"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text for prompt when variable is inputed"
+          },
+          "input": {
+            "type": "boolean",
+            "description": "True (default) if varible should be inputed by user otherwise it will be calculated using other variables. If value equal false expression field is mandatory"
+          },
+          "expression": {
+            "type": "string",
+            "descripton": "Used only when `input` = false. Javascript expression for calaculating variable. Expression can use other variables to calculate"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "Actions that can be used after generating code like adding initialization to some file",
+      "items": {
+        "type": "object",
+        "oneOf":[
+          { "$ref": "#/$defs/insertTemplateToFileAction" }
+        ]
+      }
+    }
+  },
+  "required": ["type", "path"],
+  "$defs": {
+    "insertTemplateToFileAction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["insertTemplateToFile"],
+          "description": "Type of action"
+        },
+        "fileName": {
+          "type": "string",
+          "description": "File name where to add some template"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "Text to detect where to insert template"
+        },
+        "template": {
+          "type": "string",
+          "description": "Test that should be inserted. Can use templated values."
+        },
+        "position": {
+          "enum": ["before", "after"],
+          "description": "Position where to add templte: Before snippet or after snippet."
+        }
+      },
+      "required": ["type", "fileName", "snippet", "template", "position"]
+    }
+  }
+}

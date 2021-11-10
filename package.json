@@ -27,7 +27,13 @@
           "group": "2_workspace"
         }
       ]
-    }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": ".templateGenerator.json",
+        "url": "./generatorConfigSchema.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

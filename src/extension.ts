@@ -29,8 +29,9 @@ export function activate(context: vscode.ExtensionContext) {
 					new VSFileManager(getEndOfLineValue()),
 				);
 				const contextPath = uri ? uri!.fsPath : null;
-				await templateManager.applyTemplate(templateManager.template, contextPath);
-				vscode.window.showInformationMessage('Template applied');
+				if (await templateManager.applyTemplate(templateManager.template, contextPath)) {
+					vscode.window.showInformationMessage('Template applied');
+				}
 			} catch (err: any) {
 				vscode.window.showErrorMessage(err.message);
 			}

@@ -30,7 +30,7 @@ export class TemplatesManager {
     this.fileManager = fileManager;
   }
 
-  async applyTemplate(template: Template, contextDirectory: string | null) {
+  async applyTemplate(template: Template, contextDirectory: string | null): Promise<boolean> {
     let templateValues:Array<TemplateParameter> = this.getPredefinedValues(contextDirectory);
     const calculatedVariables: Array<TemplateVariable> = [];
     for (let i = 0; i < template.variables.length; i++) {
@@ -39,7 +39,7 @@ export class TemplatesManager {
         const title = `Input ${variable.name}`;
         const variableValue = await this.uiProvider.getUserText(title, variable.prompt);
         if (variableValue === undefined) {
-          return;
+          return false;
         }
 
         templateValues.push({ name: variable.name, value: variableValue });
@@ -65,6 +65,8 @@ export class TemplatesManager {
     template.actions.forEach(action => {
       action.execute(templateValues, this.fileManager);
     });
+
+    return true;
   }
 
   getPredefinedValues(contextDirectory: string | null): Array<TemplateParameter> {

@@ -10,5 +10,6 @@ export function getWorkspaceDirectory(): string | null
 }
 
 export function getEndOfLineValue() : string {
-  return '\n';
+  const endOfLine:string = vscode.workspace.getConfiguration('files').get('eol')!;
+  return endOfLine;
 }

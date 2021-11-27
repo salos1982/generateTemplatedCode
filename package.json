@@ -1,5 +1,5 @@
 {
-  "name": "module.generator",
+  "name": "modulegenerator",
   "displayName": "Templated module generator",
   "description": "Helps adding bunch of files for new module from template",
   "version": "1.0.0",

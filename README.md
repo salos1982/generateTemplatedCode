@@ -1,11 +1,11 @@
 # Templated module generator
 
-Templated module generator is tool for generating multiple files from template. It allows to create conneted files that are part of some "module" like MVC classes. It allows to create structure of new "module" wihtout typing a lot of code.
+Templated module generator is tool for generating multiple files from template. It allows to create connected files that are part of some "module" like MVC classes. It allows to create structure of new "module" without typing a lot of code.
 
 ## Features
 
 - Allows to create module based on workspace structure or paste some "module" into specified location 
-- Allows to use input variables to generate code with correct names
+- Allows to use input variables to generate code with required names
 - Allows to use calculated variables using JavaScript and another variables
 - Allows to add special registration code
 - Json schema for config
@@ -58,9 +58,9 @@ Config file contains array of descriptions of templates. Each template has
 - type of template (workspace or local)
 - path to templates directory
 - descriptions of variables
-- description post generation actions
+- descriptions of post generation actions
 
-"Workspace" template mean that template that is defined with structure of whole workspace. E.g. if workspace has structure
+"Workspace" template means that template that is defined with structure of whole workspace. E.g. if workspace has structure
 ```
 src
   app
@@ -71,7 +71,7 @@ test
   module2
 ```
 
-than files in the template directory must follow structure like this
+then files in the template directory must follow structure like this
 ```
 src
   app
@@ -98,7 +98,9 @@ src
       module1
       module2
 ```
-When you click in context menu of modules directory "generate templated module" you will generate new module inside of modules directory. So you workspace will be
+When you click in context menu of modules directory "Generate templated module" you will generate new module inside of modules directory. 
+
+So you workspace will be
 ```
 src
   app
@@ -114,7 +116,8 @@ src
 ```
 
 ### Templates
-Templates are files with code with placeholders for variables. Placeholders are set using double braces. e.g. {{myVariable}}
+Templates are files with code with placeholders for variables. Placeholders are set using double braces. e.g. {{myVariable}}. Spaces in braces are not allowed.
+
 Example of templated file
 ```
 // generated at {{curDate}}
@@ -135,7 +138,7 @@ You can setup multiple templates so when you choose to generate module you will 
 ![select template](images/SelectTemplate.png)
 
 ### Variables
-Variables are part of code that is inputed or calculated. By deafult all variables are inputed until thieres is not field `"input": false`.
+Variables are part of templates that is inputed or calculated. By default all variables are inputed until theres is no field `"input": false`.
 So you need to input variables by hand.
 ![input variable](images/InputVariable.png)
 When variable must be input then you can set prompt to describe meaning of the variable. If variable is not inputed you must set field `"expression": "some expression"`. Expressions are javascript code with additional build-in functions:
@@ -176,6 +179,8 @@ Currently there is only one post generation action. It inserts some pattern into
 ## How To use
 Just call from context menu for the directory you want to apply new template.
 ![call template generator](images/selectExtension.png)
+### Key bindings
+You can set key binding in settings  for command `salos.module.generator`.
 
 ## Requirements
 

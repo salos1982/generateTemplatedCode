@@ -1,6 +1,6 @@
 {
-  "name": "addmodule",
-  "displayName": "Add Module",
+  "name": "module.generator",
+  "displayName": "Templated module generator",
   "description": "Helps adding bunch of files for new module from template",
   "version": "1.0.0",
   "engines": {
@@ -9,21 +9,35 @@
   "categories": [
     "Other"
   ],
+  "keywords":[
+    "template",
+    "generation",
+    "generation code",
+    "module"
+  ],
+  "homepage": "https://github.com/salos1982/generateTemplatedCode",
+  "bugs": {
+    "url": "https://github.com/salos1982/generateTemplatedCode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salos1982/generateTemplatedCode.git"
+  },
   "activationEvents": [
-    "onCommand:salos.addModule"
+    "onCommand:salos.module.generator"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "salos.addModule",
+        "command": "salos.module.generator",
         "title": "Add new templated module"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "salos.addModule",
+          "command": "salos.module.generator",
           "group": "2_workspace"
         }
       ]

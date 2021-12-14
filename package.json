@@ -2,7 +2,9 @@
   "name": "modulegenerator",
   "displayName": "Templated module generator",
   "description": "Helps adding bunch of files for new module from template",
-  "version": "1.0.0",
+  "icon": "images/Icon.png",
+  "publisher": "SergeySolozhentsev",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.61.0"
   },

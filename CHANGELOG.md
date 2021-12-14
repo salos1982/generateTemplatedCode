@@ -2,8 +2,8 @@
 
 All notable changes to the "addmodule" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [1.0.1]
+- Added Icon and License
 
-## [Unreleased]
-
+## [1.0.0]
 - Initial release

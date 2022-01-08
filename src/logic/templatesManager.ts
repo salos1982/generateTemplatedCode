@@ -67,7 +67,7 @@ export class TemplatesManager {
     }
 
     template.actions.forEach(action => {
-      action.execute(templateValues, this.fileManager);
+      action.execute(templateValues, this.fileManager, this.uiProvider);
     });
 
     return true;

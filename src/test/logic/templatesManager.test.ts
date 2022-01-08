@@ -26,6 +26,9 @@ describe('test generating templates', () => {
     const uiProvider = {
       async getUserText(title:string, promt: string): Promise<string|undefined> {
         return nameOfModule;
+      },
+      async runCommandInTerminal(cmd: string): Promise<boolean> {
+        return false;
       }
     };
 
@@ -43,6 +46,9 @@ describe('test generating templates', () => {
     const uiProvider = {
       async getUserText(title:string, promt: string): Promise<string|undefined> {
         return nameOfModule;
+      },
+      async runCommandInTerminal(cmd: string): Promise<boolean> {
+        return false;
       }
     };
 
@@ -63,6 +69,9 @@ describe('test generating templates', () => {
     const uiProvider = {
       async getUserText(title:string, promt: string): Promise<string|undefined> {
         return nameOfModule;
+      },
+      async runCommandInTerminal(cmd: string): Promise<boolean> {
+        return false;
       }
     };
 
@@ -82,6 +91,9 @@ describe('test generating templates', () => {
     const uiProvider = {
       async getUserText(title:string, promt: string): Promise<string|undefined> {
         return nameOfModule;
+      },
+      async runCommandInTerminal(cmd: string): Promise<boolean> {
+        return false;
       }
     };
 

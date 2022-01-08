@@ -1,15 +1,15 @@
-import { existsSync, statSync } from "fs";
-import { join } from "path";
+import { existsSync, statSync } from 'fs';
+import { join } from 'path';
 import {
   NoNameError,
   NoPathError,
   NoTypeError,
   WrongPathError,
   WrongTypeError,
-} from "./errors";
-import { IPostGenerateAction } from "./IPostGenerateAction";
-import { TemplateVariable } from "./TemplateVariable";
-import { PostGenerateActionFactory } from './PostGenerateActionFactory';
+} from './errors';
+import { IPostGenerateAction } from './postGenerateActions/IPostGenerateAction';
+import { TemplateVariable } from './TemplateVariable';
+import { PostGenerateActionFactory } from './postGenerateActions/PostGenerateActionFactory';
 
 export enum TemplateType {
   workspace = 'workspace',

@@ -5,7 +5,7 @@ import { join } from 'path';
 import { FsFile } from '../../logic/FsFile';
 import { IFile } from '../../logic/IFile';
 import { IFileManager } from '../../logic/IFileNamager';
-import { InsertTemplateToFileAction } from './../../logic/insertTemplateToFileAction';
+import { InsertTemplateToFileAction } from './../../logic/postGenerateActions/insertTemplateToFileAction';
 import { readFileSync } from 'fs';
 
 describe('test inserting templates into file', () => {

@@ -1,11 +1,9 @@
-import { WrongFileNameForSnippet, WrongSnippet, WrongFileNameError, NoSnippetError, WrongPositionValue } from './errors';
+import { WrongFileNameForSnippet, WrongSnippet, WrongFileNameError, NoSnippetError, WrongPositionValue } from '../errors';
 import { IPostGenerateAction } from './IPostGenerateAction';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { statSync } from 'fs';
-import { join } from 'path';
-import { processTemplateParams, TemplateParameter } from './generator';
-import { calculateExpression } from './utils';
-import { IFileManager } from './IFileNamager';
+import { processTemplateParams, TemplateParameter } from '../generator';
+import { IFileManager } from '../IFileNamager';
 
 enum InsertPosition {
   before = 'before',
@@ -36,7 +34,7 @@ export class InsertTemplateToFileAction implements IPostGenerateAction {
     }
   }
 
-  execute(currentValues: Array<TemplateParameter>, fileManager: IFileManager): void {
+  async execute(currentValues: Array<TemplateParameter>, fileManager: IFileManager): Promise<void> {
     this.fileName = processTemplateParams(this.fileName, currentValues);
     if (!existsSync(this.fileName) || !statSync(this.fileName).isFile()) {
       throw new WrongFileNameError(this.fileName);

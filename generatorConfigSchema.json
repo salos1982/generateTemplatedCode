@@ -37,6 +37,18 @@
       },
       "required": ["type", "fileName", "snippet", "template", "position"]
     },
+    "runCommandAction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["runCommand"],
+          "description": "Type of action"
+        },
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
     "template": {
       "type": "object",
       "properties": {
@@ -82,7 +94,8 @@
           "items": {
             "type": "object",
             "oneOf":[
-              { "$ref": "#/$defs/insertTemplateToFileAction" }
+              { "$ref": "#/$defs/insertTemplateToFileAction" },
+              { "$ref": "#/$defs/runCommand" }
             ]
           }
         }

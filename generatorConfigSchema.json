@@ -11,44 +11,6 @@
     }
   ],
   "$defs": {
-    "insertTemplateToFileAction": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "enum": ["insertTemplateToFile"],
-          "description": "Type of action"
-        },
-        "fileName": {
-          "type": "string",
-          "description": "File name where to add some template"
-        },
-        "snippet": {
-          "type": "string",
-          "description": "Text to detect where to insert template"
-        },
-        "template": {
-          "type": "string",
-          "description": "Test that should be inserted. Can use templated values."
-        },
-        "position": {
-          "enum": ["before", "after"],
-          "description": "Position where to add templte: Before snippet or after snippet."
-        }
-      },
-      "required": ["type", "fileName", "snippet", "template", "position"]
-    },
-    "runCommandAction": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "enum": ["runCommand"],
-          "description": "Type of action"
-        },
-        "cmd": {
-          "type": "string"
-        }
-      }
-    },
     "template": {
       "type": "object",
       "properties": {
@@ -93,9 +55,70 @@
           "description": "Actions that can be used after generating code like adding initialization to some file",
           "items": {
             "type": "object",
-            "oneOf":[
-              { "$ref": "#/$defs/insertTemplateToFileAction" },
-              { "$ref": "#/$defs/runCommand" }
+            "properties": {
+              "type": {
+                "enum": ["insertTemplateToFile", "runCommand", "npmInstall"],
+                "description": "Type of action"
+              }
+            },
+            "anyOf":[
+              {
+                "if": {
+                  "properties": { "type": { "const": "insertTemplateToFile" } },
+                  "required": ["type"]
+                },
+                "then": {
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "File name where to add some template"
+                    },
+                    "snippet": {
+                      "type": "string",
+                      "description": "Text to detect where to insert template"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "Test that should be inserted. Can use templated values."
+                    },
+                    "position": {
+                      "enum": ["before", "after"],
+                      "description": "Position where to add templte: Before snippet or after snippet."
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "runCommand" } },
+                  "required": ["type"]
+                },
+                "then": {
+                  "properties": {
+                    "cmd": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "npmInstall" } },
+                  "required": ["type"]
+                },
+                "then": {
+                  "properties": {
+                    "package": {
+                      "type": "string",
+                      "description": "Name of package to install"
+                    },
+                    "version": {
+                      "type": "string",
+                      "description": "Optional version of package to install"
+                    }
+                  }
+                }
+              }
             ]
           }
         }

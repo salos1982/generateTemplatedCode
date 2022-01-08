@@ -160,7 +160,12 @@ You can use variables in name of files of the templates. I.e. your file can be `
 
 
 ### Post generation actions
-Currently there is only one post generation action. It inserts some pattern into file after or before specified line. Description of this action.
+After successfl generation code it is possible to run some actin to configure this code.
+Currently there are following generation actions: `insertTemplateToFile`, `runCommand`, `npmInstall`. All of actions have property `type`
+- `type` - type of action. Can be only `insertTemplateToFile`, `runCommand`, `npmInstall`
+
+#### Insert template to file
+It inserts some pattern into file after or before specified line. Description of this action.
 ```
 {
   "type": "insertTemplateToFile",
@@ -170,11 +175,32 @@ Currently there is only one post generation action. It inserts some pattern into
   "position": "before"
 },
 ```
-- `type` - type of action. Can be only `insertTemplateToFile`
 - `fileName` - file where to add `template`. Can contains variables
 - `snippet` - pattern to search in the `fileName`. It is place to insert `temlate`
 - `template` - what to insert. `template` can contains variables
 - `position` - can be one of "before" and "after". Before means insert in the previous line of `snippet`. After means on next line of `snippet`
+
+#### Run command
+It runs command in terminal
+```
+{
+  "type": "runCommand",
+  "cmd": "run my command"
+},
+```
+- `cmd` - command string to execute in terminal
+
+#### NPM install
+It installs npm package
+```
+{
+  "type": "npmInstall",
+  "package": "eslint",
+  "version": "1.0.0"
+},
+```
+- `package` - Name of package to install
+- `verion` - Optional version of package to install
 
 ## How To use
 Just call from context menu for the directory you want to apply new template.
@@ -186,6 +212,10 @@ You can set key binding in settings  for command `salos.module.generator`.
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
+
+### 1.0.2
+Added runCommand and npmInstall actions
+ 
 ### 1.0.0
 
 Initial release of Templated Module Generator

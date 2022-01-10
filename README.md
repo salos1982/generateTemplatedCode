@@ -145,6 +145,7 @@ When variable must be input then you can set prompt to describe meaning of the v
 - camelCase
 - pascalCase
 - snakeCase
+- dashCase
 - fileContent
 - workspaceToAbsolutePath
 - absoluteToWorkspacePath
@@ -212,6 +213,9 @@ You can set key binding in settings  for command `salos.module.generator`.
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
+
+### 1.0.3
+Added dashCase function
 
 ### 1.0.2
 Added runCommand and npmInstall actions

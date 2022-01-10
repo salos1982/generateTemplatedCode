@@ -12,7 +12,7 @@
   "categories": [
     "Other"
   ],
-  "keywords":[
+  "keywords": [
     "template",
     "generation",
     "generation code",
@@ -73,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dashify": "^1.0.1",
     "@types/glob": "^7.1.4",
     "@types/mocha": "^9.0.0",
     "@types/node": "14.x",
@@ -98,6 +99,7 @@
     "@types/jest": "^27.0.2",
     "babel-jest": "^27.3.1",
     "camelcase": "^6.2.0",
+    "dashify": "^2.0.0",
     "jest": "^27.3.1",
     "snake-case": "^3.0.4",
     "ts-node": "^10.3.0"

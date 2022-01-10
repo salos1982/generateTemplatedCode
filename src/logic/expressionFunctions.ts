@@ -1,9 +1,10 @@
 import { readFileSync } from 'fs';
-import { join, relative } from 'path';
+import { join } from 'path';
 
 const camelCaseLib = require('camelcase');
 import { snakeCase as snakeCaseLib } from "snake-case";
 import { WrongRelativePathError } from './errors';
+import * as dashify from 'dashify';
 
 function camelCase(str: string): string {
   return camelCaseLib(str, { preserveConsecutiveUppercase: true });
@@ -36,6 +37,10 @@ function absoluteToWorkspacePath(workspacePath: string): (path:string) => string
   };
 }
 
+function dashCase(str: string): string {
+  return dashify(str);
+}
+
 function pathJoin(...paths:Array<string>): string {
   return join(...paths);
 }
@@ -49,6 +54,7 @@ export function getPredefinedFunctions(workspaceDirectory:string): Map<string, F
   result.set('workspaceToAbsolutePath', workspaceToAbsolutePath(workspaceDirectory));
   result.set('absoluteToWorkspacePath', absoluteToWorkspacePath(workspaceDirectory));
   result.set('pathJoin', pathJoin);
+  result.set('dashCase', dashCase);
 
   return result;
 }

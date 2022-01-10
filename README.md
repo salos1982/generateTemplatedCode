@@ -197,11 +197,13 @@ It installs npm package
 {
   "type": "npmInstall",
   "package": "eslint",
+  "dev": "false"
   "version": "1.0.0"
 },
 ```
 - `package` - Name of package to install
-- `verion` - Optional version of package to install
+- `version` - Optional version of package to install
+- `dev` - Optional. True to install dev dependency
 
 ## How To use
 Just call from context menu for the directory you want to apply new template.

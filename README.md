@@ -196,13 +196,11 @@ It installs npm package
 ```
 {
   "type": "npmInstall",
-  "package": "eslint",
+  "packages": "eslint",
   "dev": "false"
-  "version": "1.0.0"
 },
 ```
-- `package` - Name of package to install
-- `version` - Optional version of package to install
+- `packages` - Name of packages to install with version if needed
 - `dev` - Optional. True to install dev dependency
 
 ## How To use
@@ -215,6 +213,10 @@ You can set key binding in settings  for command `salos.module.generator`.
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
+### 1.1.0
+Added functions: generatePassword, urlEncode, escapeQuotes
+Removed version in npmInstall action
+Renamed package to packages in npmInstall action
 
 ### 1.0.3
 Added dashCase function

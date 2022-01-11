@@ -5,6 +5,7 @@ const camelCaseLib = require('camelcase');
 import { snakeCase as snakeCaseLib } from "snake-case";
 import { WrongRelativePathError } from './errors';
 import * as dashify from 'dashify';
+import { generate } from 'generate-password';
 
 function camelCase(str: string): string {
   return camelCaseLib(str, { preserveConsecutiveUppercase: true });
@@ -45,6 +46,26 @@ function pathJoin(...paths:Array<string>): string {
   return join(...paths);
 }
 
+function generatePassword(): string {
+  return generate({
+    length: 12,
+    numbers: true,
+    lowercase: true,
+    uppercase: true,
+    symbols: true,
+    strict: true,
+    exclude: '\'"`@:!'
+  });
+}
+
+function urlEncode(str: string) : string {
+  return encodeURI(str);
+}
+
+function escapeQuotes(str: string): string {
+  return str.replaceAll('"', '\\"');
+}
+
 export function getPredefinedFunctions(workspaceDirectory:string): Map<string, Function> {
   const result = new Map<string, Function>();
   result.set('camelCase', camelCase);
@@ -55,6 +76,9 @@ export function getPredefinedFunctions(workspaceDirectory:string): Map<string, F
   result.set('absoluteToWorkspacePath', absoluteToWorkspacePath(workspaceDirectory));
   result.set('pathJoin', pathJoin);
   result.set('dashCase', dashCase);
+  result.set('generatePassword', generatePassword);
+  result.set('urlEncode', urlEncode);
+  result.set('escapeQuotes', escapeQuotes);
 
   return result;
 }

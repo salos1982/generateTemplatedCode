@@ -108,13 +108,13 @@
                 },
                 "then": {
                   "properties": {
-                    "package": {
+                    "packages": {
                       "type": "string",
                       "description": "Name of package to install"
                     },
-                    "version": {
-                      "type": "string",
-                      "description": "Optional version of package to install"
+                    "dev": {
+                      "type": "boolean",
+                      "description": "Optional. True to install dev dependency"
                     }
                   }
                 }

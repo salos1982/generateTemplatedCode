@@ -213,6 +213,12 @@ You can set key binding in settings  for command `salos.module.generator`.
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
+
+### 1.1.1
+- Fixed and urlEncode function
+- Added parameter for generating password
+
+
 ### 1.1.0
 Added functions: generatePassword, urlEncode, escapeQuotes
 Removed version in npmInstall action

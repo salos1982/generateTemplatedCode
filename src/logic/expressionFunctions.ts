@@ -46,20 +46,20 @@ function pathJoin(...paths:Array<string>): string {
   return join(...paths);
 }
 
-function generatePassword(): string {
+function generatePassword(length: number): string {
   return generate({
-    length: 12,
+    length: length || 12,
     numbers: true,
     lowercase: true,
     uppercase: true,
     symbols: true,
     strict: true,
-    exclude: '\'"`@:!'
+    exclude: '\'"`@'
   });
 }
 
 function urlEncode(str: string) : string {
-  return encodeURI(str);
+  return encodeURIComponent(str);
 }
 
 function escapeQuotes(str: string): string {

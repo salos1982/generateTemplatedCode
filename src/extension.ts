@@ -45,6 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 					}
 				}
 			} catch (err: any) {
+				console.error(err);
 				vscode.window.showErrorMessage(err.message);
 			}
 		} 

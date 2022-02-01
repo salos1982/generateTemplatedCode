@@ -53,6 +53,14 @@ To use this extension you need to create file with name '.templateGenerator.json
   },
 ]
 ```
+
+Also you can move template description into separate file and link it into  '.templateGenerator.json' using import statment
+```
+{ "import": "../templates/application.json" }
+```
+Where value of import property is path to json file with template description.
+
+
 Config file contains array of descriptions of templates. Each template has 
 - name of template
 - type of template (workspace or local)
@@ -212,27 +220,6 @@ You can set key binding in settings  for command `salos.module.generator`.
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-
-### 1.1.1
-- Fixed and urlEncode function
-- Added parameter for generating password
-
-
-### 1.1.0
-Added functions: generatePassword, urlEncode, escapeQuotes
-Removed version in npmInstall action
-Renamed package to packages in npmInstall action
-
-### 1.0.3
-Added dashCase function
-
-### 1.0.2
-Added runCommand and npmInstall actions
- 
-### 1.0.0
-
-Initial release of Templated Module Generator
 
 
 -----------------------------------------------------------------------------------------------------------

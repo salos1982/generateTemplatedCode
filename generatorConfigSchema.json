@@ -8,6 +8,14 @@
     {
       "type": "array",
       "items": { "$ref": "#/$defs/template" }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "import": {
+          "type": "string"
+        }
+      }
     }
   ],
   "$defs": {

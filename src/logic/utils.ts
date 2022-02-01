@@ -1,6 +1,8 @@
 import { TemplateVariable } from "./TemplateVariable";
 import { CycleDependencyError } from './errors';
 import { TemplateParameter } from "./generator";
+import { existsSync } from "fs";
+import { join } from "path";
 
 interface GraphNode {
   variable: TemplateVariable;
@@ -89,4 +91,17 @@ export function appendIndent(content: string, indent: string, endOfLine: string)
     }
 
     return lines.join(endOfLine);
+}
+
+export function tryToGetFullPath(path: string, basePath: string): string | null {
+  if (existsSync(path)) {
+    return path;
+  }
+
+  const combinedPath = join(basePath, path);
+  if (existsSync(combinedPath)) {
+    return combinedPath;
+  }
+
+  return null;
 }

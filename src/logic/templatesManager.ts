@@ -1,12 +1,12 @@
 import { readFileSync, existsSync } from "fs";
-import { join } from "path";
+import { basename, dirname, join } from "path";
 import { Template, TemplateType } from "./template";
 import { TemplateVariable } from "./TemplateVariable";
 import { IUIProvider } from './IUIProvider';
 import { generateModule, TemplateParameter } from "./generator";
-import { NoConfigFileError, NoContextDirectoryError } from "./errors";
+import { NoConfigFileError, NoContextDirectoryError, WrongTemplatePathError } from "./errors";
 import { configFileName } from "./constants";
-import { calculateExpression, sortCalculatedVariablesDependencies } from "./utils";
+import { calculateExpression, sortCalculatedVariablesDependencies, tryToGetFullPath } from "./utils";
 import { getPredefinedFunctions } from './expressionFunctions';
 import { IFileManager } from './IFileNamager';
 
@@ -21,17 +21,17 @@ export class TemplatesManager {
     if (!existsSync(configFilename)) {
       throw new NoConfigFileError(workspaceDirectory);
     }
+    this.workspaceDirectory = workspaceDirectory;
+    this.uiProvider = uiProvider;
+    this.fileManager = fileManager;
 
     const configData = readFileSync(configFilename, { encoding: 'utf-8'});
     const config = JSON.parse(configData);
     if (config instanceof Array) {
-      this.templates = config.map(item => new Template(item, workspaceDirectory));
+      this.templates = config.map(item => this.processSingleTemplate(item));
     } else {
-      this.templates.push(new Template(config, workspaceDirectory));
+      this.templates.push(this.processSingleTemplate(config));
     }
-    this.workspaceDirectory = workspaceDirectory;
-    this.uiProvider = uiProvider;
-    this.fileManager = fileManager;
   }
 
   async applyTemplate(template: Template, contextDirectory: string | null): Promise<boolean> {
@@ -96,5 +96,21 @@ export class TemplatesManager {
     });
 
     return resultValues;
+  }
+
+  private processSingleTemplate(templateConfig: any): Template {
+    if (templateConfig.import) {
+      const importPath = tryToGetFullPath(templateConfig.import, this.workspaceDirectory);
+      if (!importPath) {
+        throw new WrongTemplatePathError(templateConfig.import);
+      }
+
+      const configData = readFileSync(importPath, { encoding: 'utf-8'});
+      const config = JSON.parse(configData);
+      const templatePath = dirname(importPath);
+      return new Template(config, templatePath);
+    } else {
+      return new Template(templateConfig, this.workspaceDirectory);
+    }
   }
 }

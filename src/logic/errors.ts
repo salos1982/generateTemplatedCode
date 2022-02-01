@@ -6,6 +6,12 @@ export class WrongPathError extends Error {
   }
 }
 
+export class WrongTemplatePathError extends Error {
+  constructor(path: string) {
+    super(`Wrong path for template '${path}'`);
+  }
+}
+
 export class NoPathError extends Error {
   constructor() {
     super('No path for template');
@@ -44,7 +50,7 @@ export class WrongVariableNameError extends Error {
 
 export class NoConfigFileError extends Error {
   constructor(workspaceDirectory: string) {
-    super(`Config found "${configFileName}}" is not found in workspace directory ${workspaceDirectory}`);
+    super(`Config "${configFileName}}" is not found in workspace directory ${workspaceDirectory}`);
   }
 }
 

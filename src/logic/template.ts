@@ -1,5 +1,4 @@
-import { existsSync, statSync } from 'fs';
-import { join } from 'path';
+import {  statSync } from 'fs';
 import {
   NoNameError,
   NoPathError,
@@ -10,6 +9,7 @@ import {
 import { IPostGenerateAction } from './postGenerateActions/IPostGenerateAction';
 import { TemplateVariable } from './TemplateVariable';
 import { PostGenerateActionFactory } from './postGenerateActions/PostGenerateActionFactory';
+import { tryToGetFullPath } from './utils';
 
 export enum TemplateType {
   workspace = 'workspace',
@@ -23,7 +23,7 @@ export class Template {
   variables: Array<TemplateVariable> = [];
   actions: Array<IPostGenerateAction> = [];
 
-  constructor(config: any, workspaceDirectory: string) {
+  constructor(config: any, baseDirectory: string) {
     if (!config.type) {
       throw new NoTypeError();
     }
@@ -40,15 +40,12 @@ export class Template {
     }
     this.name = config.name;
 
-    if (!existsSync(config.path) || !statSync(config.path).isDirectory()) {
-      const localPath = join(workspaceDirectory, config.path);
-      if (!existsSync(localPath) || !statSync(localPath).isDirectory()) {
-        throw new WrongPathError(config.path);
-      }
-      this.templatePath = localPath;
-    } else {
-      this.templatePath = config.path;
+    const fullPath = tryToGetFullPath(config.path, baseDirectory);
+    if (!fullPath ||  !statSync(fullPath).isDirectory()) {
+      throw new WrongPathError(config.path);
     }
+
+    this.templatePath = fullPath;
     
     (config.variables ?? []).forEach((element: any) => {
       this.variables.push(new TemplateVariable(element));

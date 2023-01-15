@@ -43,7 +43,7 @@ function dashCase(str: string): string {
 }
 
 function pathJoin(...paths:Array<string>): string {
-  return join(...paths);
+  return join(...paths).replaceAll('\\', '/');
 }
 
 function generatePassword(length: number): string {

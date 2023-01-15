@@ -114,3 +114,9 @@ export class NoActionTypeError extends Error {
     super('Action must have "type" field');
   }
 }
+
+export class ExpressionError extends Error {
+  constructor(expression:string, error: string) {
+    super(`Error in expression ${expression}\n${error}`);
+  }
+}

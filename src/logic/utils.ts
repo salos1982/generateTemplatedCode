@@ -1,5 +1,5 @@
 import { TemplateVariable } from "./TemplateVariable";
-import { CycleDependencyError } from './errors';
+import { CycleDependencyError, ExpressionError } from './errors';
 import { TemplateParameter } from "./generator";
 import { existsSync } from "fs";
 import { join } from "path";
@@ -79,9 +79,13 @@ export function calculateExpression(
     functionParamatersValues.push(value);
   });
 
-  const func = new Function(...functionParameters, `return ${expression}`);
-  const value = func(...functionParamatersValues);
-  return value;
+  try {
+    const func = new Function(...functionParameters, `return ${expression}`);
+    const value = func(...functionParamatersValues);
+    return value;
+  } catch (err: any) {
+    throw new ExpressionError(expression, err.message);
+  }
 }
 
 export function appendIndent(content: string, indent: string, endOfLine: string): string {

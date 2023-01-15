@@ -27,4 +27,5 @@ export class CopyRemoteFileWithSudo implements IPostGenerateAction {
     await uiProvider.runCommandInTerminal(moveCommand);
   }
   
+  check() {}
 }

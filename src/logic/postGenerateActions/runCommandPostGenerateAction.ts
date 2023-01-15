@@ -4,15 +4,16 @@ import { IUIProvider } from '../IUIProvider';
 import { IPostGenerateAction } from './IPostGenerateAction';
 
 export class RunCommandPostGenerateAction implements IPostGenerateAction {
-  private ccommand: string;
+  private command: string;
 
   constructor(config: any) {
-    this.ccommand = config.cmd;
+    this.command = config.cmd;
   }
 
   async execute(currentValues: TemplateParameter[], fileManager: IFileManager, uiProvider: IUIProvider): Promise<void> {
-    const command = processTemplateParams(this.ccommand, currentValues);
+    const command = processTemplateParams(this.command, currentValues);
     await uiProvider.runCommandInTerminal(command);
   }
 
+  check() {}
 }

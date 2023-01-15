@@ -56,6 +56,11 @@ export class TemplatesManager {
       templateValues = this.calculateExpressions(calculatedVariables, templateValues);
     }
 
+    for (let i = 0; i < template.actions.length; i++) {
+      const action = template.actions[i];
+      action.check(templateValues, this.fileManager);
+    }
+
     if (template.type === TemplateType.local) {
       if (contextDirectory) {
         generateModule(template.templatePath, contextDirectory, templateValues);
@@ -66,9 +71,10 @@ export class TemplatesManager {
       generateModule(template.templatePath, this.workspaceDirectory, templateValues);
     }
 
-    template.actions.forEach(action => {
-      action.execute(templateValues, this.fileManager, this.uiProvider);
-    });
+    for (let i = 0; i < template.actions.length; i++) {
+      const action = template.actions[i];
+      await action.execute(templateValues, this.fileManager, this.uiProvider);
+    }
 
     return true;
   }

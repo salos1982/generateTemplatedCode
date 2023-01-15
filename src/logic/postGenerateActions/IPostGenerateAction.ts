@@ -8,4 +8,6 @@ export interface IPostGenerateAction {
     fileManager: IFileManager,
     uiProvider: IUIProvider,
   ): Promise<void>;
+
+  check(currentValues: Array<TemplateParameter>, fileManager: IFileManager): void;
 }

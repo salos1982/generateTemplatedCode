@@ -36,15 +36,9 @@ export class InsertTemplateToFileAction implements IPostGenerateAction {
 
   async execute(currentValues: Array<TemplateParameter>, fileManager: IFileManager): Promise<void> {
     this.fileName = processTemplateParams(this.fileName, currentValues);
-    if (!existsSync(this.fileName) || !statSync(this.fileName).isFile()) {
-      throw new WrongFileNameError(this.fileName);
-    }
 
     const file = fileManager.getFile(this.fileName);
     const startOfLine = file.getStartOfLinePositionWithText(this.snippet);
-    if (startOfLine === -1) {
-      throw new NoSnippetError(this.snippet, this.fileName);
-    }
 
     const indent = file.getLineIndent(startOfLine);
     const processedTemplate = processTemplateParams(this.template, currentValues);
@@ -60,5 +54,18 @@ export class InsertTemplateToFileAction implements IPostGenerateAction {
     }
 
     file.save();
+  }
+
+  check(currentValues: Array<TemplateParameter>, fileManager: IFileManager):void {
+    const fileName = processTemplateParams(this.fileName, currentValues);
+    if (!existsSync(fileName) || !statSync(fileName).isFile()) {
+      throw new WrongFileNameError(fileName);
+    }
+
+    const file = fileManager.getFile(fileName);
+    const startOfLine = file.getStartOfLinePositionWithText(this.snippet);
+    if (startOfLine === -1) {
+      throw new NoSnippetError(this.snippet, this.fileName);
+    }
   }
 }

@@ -17,4 +17,5 @@ export class NpmInstallAction implements IPostGenerateAction {
     await uiProvider.runCommandInTerminal(command);
   }
   
+  check() {}
 }

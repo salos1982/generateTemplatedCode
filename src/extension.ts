@@ -23,7 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
 					new VSCodeUIProvider(),
 					new VSFileManager(getEndOfLineValue()),
 				);
-				const contextPath = uri ? uri!.fsPath : null;
+				let contextPath = uri ? uri!.fsPath : null;
+				if (contextPath) {
+					contextPath = contextPath.replaceAll('\\', '/');
+				}
 
 				if (templateManager.templates.length === 1) {
 					if (await templateManager.applyTemplate(templateManager.templates[0], contextPath)) {

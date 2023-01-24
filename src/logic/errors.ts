@@ -120,3 +120,9 @@ export class ExpressionError extends Error {
     super(`Error in expression ${expression}\n${error}`);
   }
 }
+
+export class ParseTemplateError extends Error {
+  constructor(message: string, file:string) {
+    super(`Cannot parse template config ${file}\n${message}`);
+  }
+}

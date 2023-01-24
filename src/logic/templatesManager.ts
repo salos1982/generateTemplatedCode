@@ -4,7 +4,7 @@ import { Template, TemplateType } from "./template";
 import { TemplateVariable } from "./TemplateVariable";
 import { IUIProvider } from './IUIProvider';
 import { generateModule, TemplateParameter } from "./generator";
-import { NoConfigFileError, NoContextDirectoryError, WrongTemplatePathError } from "./errors";
+import { NoConfigFileError, NoContextDirectoryError, ParseTemplateError, WrongTemplatePathError } from "./errors";
 import { configFileName } from "./constants";
 import { calculateExpression, sortCalculatedVariablesDependencies, tryToGetFullPath } from "./utils";
 import { getPredefinedFunctions } from './expressionFunctions';
@@ -26,7 +26,12 @@ export class TemplatesManager {
     this.fileManager = fileManager;
 
     const configData = readFileSync(configFilename, { encoding: 'utf-8'});
-    const config = JSON.parse(configData);
+    let config: any;
+    try {
+      config = JSON.parse(configData);
+    } catch (err: any) {
+      throw new ParseTemplateError(err.message, configFileName);
+    }
     if (config instanceof Array) {
       this.templates = config.map(item => this.processSingleTemplate(item));
     } else {
@@ -112,9 +117,13 @@ export class TemplatesManager {
       }
 
       const configData = readFileSync(importPath, { encoding: 'utf-8'});
-      const config = JSON.parse(configData);
-      const templatePath = dirname(importPath);
-      return new Template(config, templatePath);
+      try {
+        const config = JSON.parse(configData);
+        const templatePath = dirname(importPath);
+        return new Template(config, templatePath);
+      } catch (err: any) {
+        throw new ParseTemplateError(err.message, importPath);
+      }
     } else {
       return new Template(templateConfig, this.workspaceDirectory);
     }

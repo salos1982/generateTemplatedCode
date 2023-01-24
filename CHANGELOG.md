@@ -2,6 +2,9 @@
 
 All notable changes to the "addmodule" extension will be documented in this file.
 
+### 1.1.4
+- Show more informative json errors
+  
 ### 1.1.3
 - Await actions to be executed
 - Use unix-style paths

@@ -3,7 +3,6 @@ import { copySync, remove } from 'fs-extra';
 import 'jest-extended';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { configFileName } from '../../logic/constants';
 
 import { TemplatesManager } from '../../logic/templatesManager';
 import { FileManager } from './../../logic/fileManager';

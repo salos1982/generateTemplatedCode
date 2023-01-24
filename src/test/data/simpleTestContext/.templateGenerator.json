@@ -1,6 +1,7 @@
 {
   "type": "local",
   "path": "template",
+  "name": "test module simple test context",
   "variables": [
     {
       "name": "nameOfModule",

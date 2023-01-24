@@ -1,6 +1,7 @@
 {
   "type": "workspace",
   "path": "template",
+  "name": "simple test",
   "variables": [
     {
       "name": "nameOfModule",

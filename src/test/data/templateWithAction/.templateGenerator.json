@@ -1,6 +1,7 @@
 {
   "type": "workspace",
   "path": "template",
+  "name": "test module with action",
   "variables": [
     {
       "name": "nameOfModule",

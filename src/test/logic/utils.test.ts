@@ -205,4 +205,12 @@ describe('test calculation of expressions', () => {
       'pathJoin(var1, var2, var3)',
     )).toBe(join('FooBar', 'value', '1'));
   });
+
+  it('test calculate replaceAll', () => {
+    const resultValue = calculateExpression(functionsMap, [], "new Date().toISOString().replace(/[:\\-TZ]/g,'').replace(/\\.\\d{3}/g, '')");
+    expect(resultValue.length).toBe(14);
+    const date = new Date();
+    const dateString = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+    expect(resultValue.substring(0, 8)).toBe(dateString);
+  });
 });

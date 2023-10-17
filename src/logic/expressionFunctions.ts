@@ -54,7 +54,7 @@ function generatePassword(length: number): string {
     uppercase: true,
     symbols: true,
     strict: true,
-    exclude: '\'"`@'
+    exclude: '\'"`@!'
   });
 }
 
